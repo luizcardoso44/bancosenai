@@ -15,7 +15,7 @@ namespace BancoSENAIAPI.Controllers
         [HttpPost("Upload/{codigoCliente}")]
         public async Task<IActionResult> AnexarArquivo(int codigoCliente, IFormFile arquivo)
         {
-            if(arquivo == null|| arquivo.Length == 0)
+            if (arquivo == null || arquivo.Length == 0)
             {
                 return BadRequest("Nenhum arquivo foi enviado. ");
             }
@@ -44,7 +44,20 @@ namespace BancoSENAIAPI.Controllers
             };
             _documentosMetadados.Add(DocumentosMetadados);
 
-            return Ok(new {mensagem = "Documento anexado com sucesso", arquivoSalvo = novonome });
+            return Ok(new { mensagem = "Documento anexado com sucesso", arquivoSalvo = novonome });
+        }
+        [HttpGet("/api/v1/documento/listar/{codigoCliente}")]
+        public IActionResult ListarDocumentos(int codigoCliente)
+        {
+            var documentos = _documentosMetadados.Where(d => d.CodigoCliente == codigoCliente).ToList();
+
+            if (!documentos.Any())
+            {
+                return NotFound("Nenhum documento encontrado.");
+            }
+
+            return Ok(documentos);
         }
     }
 }
+
