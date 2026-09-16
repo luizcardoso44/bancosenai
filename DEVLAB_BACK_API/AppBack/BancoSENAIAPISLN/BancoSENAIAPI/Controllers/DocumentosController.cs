@@ -30,6 +30,15 @@ namespace BancoSENAIAPI.Controllers
             string novonome = $"{codigoCliente}_{nameOriginal}_{Guid.NewGuid()}{extensao}";
             string caminhoFinal = Path.Combine(pastaCliente, novonome);
 
+            long limitebytes = 2 * 1024 * 1024;
+
+
+            if(arquivo.Length > limitebytes)
+            {
+                return BadRequest("Arquivo maior que o limite");
+            }
+
+
             using (var stream = new FileStream(caminhoFinal, FileMode.Create))
             {
                 await arquivo.CopyToAsync(stream);
