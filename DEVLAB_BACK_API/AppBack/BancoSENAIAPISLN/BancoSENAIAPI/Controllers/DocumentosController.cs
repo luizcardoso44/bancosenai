@@ -91,7 +91,7 @@ namespace BancoSENAIAPI.Controllers
             _documentosMetadados.Remove(documento);
 
             return Ok(new { mensagem = "Documento excluído com sucesso." });
-        }
+        } 
     }
 }
 
