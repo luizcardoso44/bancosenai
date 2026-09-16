@@ -32,11 +32,18 @@ namespace BancoSENAIAPI.Controllers
 
             long limitebytes = 2 * 1024 * 1024;
 
+            string[] extensaopermitida = { ".jpg", ".pfd", ".png" };
 
-            if(arquivo.Length > limitebytes)
+            if (arquivo.Length > limitebytes)
             {
                 return BadRequest("Arquivo maior que o limite");
             }
+
+            if (!extensaopermitida.Contains(extensao.ToLower()))
+            {
+                return BadRequest("Extensão não suportada");
+            }
+
 
 
             using (var stream = new FileStream(caminhoFinal, FileMode.Create))
