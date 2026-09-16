@@ -32,7 +32,7 @@ namespace BancoSENAIAPI.Controllers
 
             long limitebytes = 2 * 1024 * 1024;
 
-            string[] extensaopermitida = { ".jpg", ".pfd", ".png" };
+            string[] extensaopermitida = { ".jpg", ".pdf", ".png" };
 
             if (arquivo.Length > limitebytes)
             {
