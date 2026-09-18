@@ -54,7 +54,7 @@ namespace BancoSENAIAPI.Controllers
             {
                 Id = _nextId++,
                 Name = nameOriginal,
-                Extensão = extensao,
+                Extensao = extensao,
                 Caminho = caminhoFinal,
                 CodigoCliente = codigoCliente
             };
@@ -85,7 +85,7 @@ namespace BancoSENAIAPI.Controllers
             }
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(documento.Caminho);
-            string nomeArquivo = $"{documento.Name}{documento.Extensão}";
+            string nomeArquivo = $"{documento.Name}{documento.Extensao}";
 
             return File(fileBytes, "application/octet-stream", nomeArquivo);
         }

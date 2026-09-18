@@ -25,4 +25,45 @@ async function enviarDocumento() {
     } else {
         alert("Erro. Falha ao enviar o documento");
     }
+    // HU01 - Busca e Listagem de Documentos
+    async function buscarDocumentos() {
+        const clienteId = document.getElementById("buscaClienteId").value;
+
+        if (!clienteId) {
+            alert("Informe o código do cliente para buscar!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${URL_API}/cliente/${clienteId}`);
+
+            if (!response.ok) {
+                throw new Error("Erro ao buscar documentos do cliente.");
+            }
+
+            const documentos = await response.json();
+            renderizarTabela(documentos);
+        } catch (error) {
+            console.error("Erro na busca:", error);
+            alert("Erro ao carregar lista de documentos.");
+        }
+    }
+
+    function renderizarTabela(documentos) {
+        const tabelaBody = document.getElementById("tabelaBody");
+        tabelaBody.innerHTML = ""; 
+
+        documentos.forEach(doc => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+            <td>${doc.id}</td>
+            <td>${doc.nome}</td>
+            <td>${doc.extensao}</td>
+            <td>
+                <!-- Botões de ações das próximas HUs serão inseridos aqui -->
+            </td>
+        `;
+            tabelaBody.appendChild(tr);
+        });
+    }
 }

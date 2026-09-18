@@ -11,7 +11,7 @@ namespace BancoSENAIAPI.Controllers
             "ClienteArquivos"
         );
 
-        private static List<Models.DocumentoMetadado> _documentosMetadados = new List<Models.DocumentoMetadado>();
+        private static List<Models.DocumentoMetadados> _documentosMetadados = new List<Models.DocumentoMetadados>();
 
         private static int _nextId = 1;
 
@@ -55,7 +55,7 @@ namespace BancoSENAIAPI.Controllers
                 await arquivo.CopyToAsync(stream);
             }
 
-            var documentoMetadados = new Models.DocumentoMetadado
+            var documentoMetadados = new Models.DocumentoMetadados
             {
                 Id = _nextId++,
                 Name = nomeOriginal,
