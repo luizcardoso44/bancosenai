@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("PermitirTudo", 
+    options.AddPolicy("PermitirTudo",
         policy => policy.AllowAnyOrigin() // Permite a 'origin null' do seu arquivo local
                         .AllowAnyMethod() // Permite os verbos GET, POST, PUT, DELETE [2]
                         .AllowAnyHeader()); // Permite o envio de JSON no corpo da mensagem [3]
