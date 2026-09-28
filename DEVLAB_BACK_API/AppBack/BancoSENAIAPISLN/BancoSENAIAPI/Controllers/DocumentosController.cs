@@ -53,7 +53,7 @@ namespace BancoSENAIAPI.Controllers
             var DocumentosMetadados = new Models.DocumentoMetadados
             {
                 Id = _nextId++,
-                Name = nameOriginal,
+                Nome = nameOriginal,
                 Extensao = extensao,
                 Caminho = caminhoFinal,
                 CodigoCliente = codigoCliente
@@ -85,7 +85,7 @@ namespace BancoSENAIAPI.Controllers
             }
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(documento.Caminho);
-            string nomeArquivo = $"{documento.Name}{documento.Extensao}";
+            string nomeArquivo = $"{documento.Nome}{documento.Extensao}";
 
             return File(fileBytes, "application/octet-stream", nomeArquivo);
         }
