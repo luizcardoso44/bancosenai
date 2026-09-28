@@ -9,7 +9,7 @@ namespace BancoSENAIAPI.Controllers
     [Route("api/v1/[controller]")]
     public class AgenciaController : ControllerBase
     {
-       private readonly AppDbContext _context;
+        private readonly AppDbContext _context;
         public AgenciaController(AppDbContext context)
         {
             _context = context;
@@ -25,12 +25,12 @@ namespace BancoSENAIAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar([FromBody] Agencia novaAgencia)
         {
-            
+
             if (await _context.Agencia.AnyAsync(a => a.NumeroAgencia == novaAgencia.NumeroAgencia))
                 return BadRequest(new { message = "Este número de agência já existe." });
 
             _context.Agencia.Add(novaAgencia);
-            await _context.SaveChangesAsync();  
+            await _context.SaveChangesAsync();
             return Created("", novaAgencia);
         }
 
