@@ -58,7 +58,7 @@ namespace BancoSENAIAPI.Controllers
             var documentoMetadados = new Models.DocumentoMetadados
             {
                 Id = _nextId++,
-                Name = nomeOriginal,
+                Nome = nomeOriginal,
                 Extensao = extensao,
                 Caminho = caminhoFinal,
                 CodigoCliente = codigoCliente
