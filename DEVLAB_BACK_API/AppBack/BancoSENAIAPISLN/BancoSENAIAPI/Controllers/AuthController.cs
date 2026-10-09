@@ -2,11 +2,10 @@
 using BancoSENAIAPI.Dtos;
 using BancoSENAIAPI.Models;
 using BancoSENAIAPI.Services;
-using BCrypt.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFramewokCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace BancoSENAIAPI.Controllers
 {
@@ -22,35 +21,40 @@ namespace BancoSENAIAPI.Controllers
             _context = context;
             _tokenService = tokenService;
         }
+        [AllowAnonymous]
         [HttpPost("registrar")]
         public async Task<IActionResult> Registrar([FromBody] RegisterRequest dto)
         {
             if (await _context.Usuario.AnyAsync(u => u.NomeUsuario == dto.NomeUsuario))
             {
-                return BadRequest(new { message = "Este nome de usuario já está em uso" });
+                return BadRequest(new { message = "Este nome de usuário ja está em uso!" });
             }
+
             var usuario = new Usuario
             {
+
                 NomeUsuario = dto.NomeUsuario,
                 SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha)
             };
+
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 
             return Created("", new { usuario.Id, usuario.NomeUsuario });
         }
-        [HttpPost("Login")]
+        [AllowAnonymous]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto dto)
         {
             var usuario = await _context.Usuario.FirstOrDefaultAsync(u => u.NomeUsuario == dto.NomeUsuario);
+
             if (usuario == null || BCrypt.Net.BCrypt.Verify(dto.Senha, usuario.SenhaHash))
             {
-                return Unauthorized(new {message = "Usuário ou senha inválido"});
+                return Unauthorized(new { message = "Usuário ou senha inválidos" });
             }
             var (token, expiraEm) = _tokenService.GerarToken(usuario);
 
             return Ok(new LoginResponseDto { Token = token, ExpiraEm = expiraEm });
         }
-        
     }
 }
